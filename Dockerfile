@@ -18,4 +18,4 @@ RUN dotnet publish -c Release -o out
 FROM build AS testrunner
 WORKDIR /app/test
 COPY UnitTestProject1/. .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+CMD ["dotnet", "test", "--logger:trx"]
