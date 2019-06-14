@@ -45,14 +45,9 @@ stages:
         tags: |
           $(tag)
     - script: |
-          mkdir TestResults
-          docker run --rm -v $(System.DefaultWorkingDirectory)/TestResults:$(containerPath) $(imgName)
+          docker run $(imgName)
       continueOnError: true
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '*.trx'
-        searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
+    
     
 
    
