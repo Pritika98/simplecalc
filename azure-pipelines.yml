@@ -45,7 +45,7 @@ stages:
         tags: |
           $(tag)
     - script: |
-          docker run $(imgName)
+          docker run --rm -v $(System.DefaultWorkingDirectory):$(containerPath) $(imgName)
       continueOnError: true
     
     
