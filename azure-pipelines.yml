@@ -19,7 +19,7 @@ variables:
   imgName: '$(containerRegistry)/$(imageRepository):$(tag)'
   
   # Agent VM image name
-  vmImageName: 'Default'
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -34,26 +34,24 @@ stages:
       displayName: Login to ACR
       inputs:
         command: login
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'dockerazure'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'dockerazure'
         tags: |
           $(tag)
-      continueOnError: true
     - script: |
-          docker run --rm -v $(System.DefaultWorkingDirectory):$(containerPath) $(imgName)
-      
+         mkdir TestResults & docker run --rm -v $(System.DefaultWorkingDirectory)/TestResults:$(containerPath) $(imgName)
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '*.trx'
         searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
-
     
+
 
    
