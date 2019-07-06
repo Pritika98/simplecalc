@@ -44,6 +44,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+      continueOnError: true
     - script: |
           docker run --rm -v $(System.DefaultWorkingDirectory):$(containerPath) $(imgName)
       
@@ -52,7 +53,7 @@ stages:
         testResultsFormat: 'VSTest'
         testResultsFiles: '*.trx'
         searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
-      continueOnError: true
+
     
 
    
